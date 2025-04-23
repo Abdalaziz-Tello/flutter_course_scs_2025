@@ -1,80 +1,59 @@
+class User {
+  String name;
+  String image;
+  int birthDate;
+  User({required this.image,required this.name,required this.birthDate});
 
- int signFunc(int product){
-  if (product>0) {
-    return 1;
-  }else if(product<0){
-    return -1;
-  }else {
-    throw Exception();
-  }
- }
-
- String sayMyName(dynamic name){
-  try {
-    name / 5 ;
-    return name;
-  } catch (e) {
-    return "There is A problem";
-  }
- }
-
-
-void main() {
-  // ? Start The Solutaion
-  List<int> nums =[1,2,5,9,-1,0];
-  int result= 1;
-  for (var i = 0; i < nums.length; i++) {
-    result=result*nums[i];
-  }
-  // print(result);
-  try {
-    int output = signFunc(result);
-  } catch (e) {
-    print("Hello From Catch");
-  }
-  print("Here I am Out the Catch ,  So >_< Hello");
-  try {
-  print(nums[10]);
-    
-  } catch (e) {
-    print(e);
-  }
-
-  print(sayMyName("Ahmad"));
-
-
-
-  // ! Here The Begain of Session // 
-  // List names = ["Hello", 123, true];
-  // for (var i = 0; i < names.length; i++) {
-  //   print(names[i]);
-  // }
-  // print("object;");
-
-  // Map marks = {"Math 3": 59, "English": 100, "Computer Arch": 20};
-  // print(marks["Hello"]);
-  // print(marks.keys.elementAt(1));
-
-  // List<Map<String, int>> nestedMap = [
-  //   {
-      
-  //     "Physics": 123,
-  //     "Arabic": 222,
-  //     "Music": 1000,},
-
-
-  //   {"Physics": 101, "Arabic": 0, "Music": 321,},
-  // ];
-
-  // print(nestedMap[1].keys.elementAt(1));
-
-
-  // List<Map<String,int>> tabel =[
-  //   {
-  //     "Ahmad":100,
-  //     "Yaser":90
-  //   }
-  // ];
-  // print(tabel[0].keys.elementAt(1));
-  // print(tabel[0]["Yaser"]);
+age(){
+  /// ? This is 2025
+  print(DateTime.now().year-birthDate);
 }
+}
+
+
+class InfluncerUser extends User {
+int dollarByView;
+InfluncerUser({required this.dollarByView,required super.name,required super.image,required super.birthDate});
+
+
+paidInSyrianPound(){
+  print(dollarByView*11500);
+}
+}
+void main() {
+  User account =User(image: "blabla", name: "Noor",birthDate: 1999);
+  print(account.name);
+  print(account.image);
+  User account2 = User(image: "Anouther bla bla", name: "Yaser",birthDate: 2010);
+  print(account2.name);
+  print(account2.image);
+  account.age();
+  account2.age();
+
+
+  InfluncerUser tom = InfluncerUser(dollarByView: 200, name: "Tom Kroz", image: "lorem ipsum", birthDate: 1962);
+  print(tom.dollarByView);
+  tom.age();
+  tom.paidInSyrianPound();
+  // calculateNumber(firstNumber:20 ,thirdNumber: 20,secondNumber: 20);
+
+
+
+// ! compare const & final keyword
+// ? optional assigned before make it constants
+// final int temp;
+// temp = 300;
+// ? must assigned before make it constants
+// const int temp1;
+// temp1=300;
+
+}
+// ? Named Optional Parametar & Named Required Parametars
+calculateNumber({required int firstNumber,required int secondNumber,int thirdNumber =1}){
+  print(firstNumber*secondNumber*thirdNumber);
+
+}
+
+
+
+
