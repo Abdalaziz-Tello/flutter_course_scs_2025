@@ -1,6 +1,7 @@
 
 
 
+import 'package:auth_dummy/main.dart';
 import 'package:dio/dio.dart';
 
 
@@ -16,6 +17,7 @@ Future<bool> logIn({required String username,required String password})async{
   });
   print(response.data['accessToken']);
   token=response.data['accessToken'];
+  storage.setString('token', token);
   return true;
   } catch (e) {
     print(e);
@@ -30,7 +32,7 @@ dynamic getMyProfile()async{
   options: Options(
     headers: 
       {
-    'Authorization': 'Bearer ${token}', // Pass JWT via Authorization header
+    'Authorization': 'Bearer ${storage.getString('token')}', // Pass JWT via Authorization header
   }
     
   )

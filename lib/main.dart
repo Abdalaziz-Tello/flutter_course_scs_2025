@@ -1,7 +1,12 @@
 import 'package:auth_dummy/service/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+
+late SharedPreferences storage;
+void main()async {
+  WidgetsFlutterBinding.ensureInitialized();
+storage =await SharedPreferences.getInstance();
   runApp(const MyApp());
 }
 
@@ -10,7 +15,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: LogInPage());
+    return MaterialApp(home: storage.getString('token')==null ? LogInPage():ProfilePage());
   }
 }
 
@@ -62,6 +67,16 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: Column(
+          children: [
+            UserAccountsDrawerHeader(accountName: Text("Emily"), accountEmail: IconButton(onPressed: (){
+              storage.clear();
+              Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => LogInPage(),));
+            }, icon: Icon(Icons.logout)))
+          ],
+        ),
+      ),
       appBar: AppBar(),
       body: Center(
         child: FutureBuilder(future: getMyProfile(), builder: (context, snapshot) {
