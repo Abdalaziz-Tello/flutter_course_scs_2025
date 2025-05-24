@@ -1,3 +1,5 @@
+import 'package:auth_dummy/model/user_model.dart';
+import 'package:auth_dummy/photo_page.dart';
 import 'package:auth_dummy/service/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -5,6 +7,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 late SharedPreferences storage;
 void main()async {
+
+UserModel user = UserModel(password: "123", username: "Ahmad");
+print(user);
+print(user.toMap());
+
+
   WidgetsFlutterBinding.ensureInitialized();
 storage =await SharedPreferences.getInstance();
   runApp(const MyApp());
@@ -46,8 +54,7 @@ class LogInPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           bool status = await logIn(
-            username: username.text,
-            password: password.text,
+            user: UserModel(password: password.text, username: username.text)
           );
           if (status) {
             Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(),));
@@ -81,14 +88,13 @@ class ProfilePage extends StatelessWidget {
       body: Center(
         child: FutureBuilder(future: getMyProfile(), builder: (context, snapshot) {
           if (snapshot.hasData) {
-            Map<String,dynamic> map = snapshot.data as Map<String,dynamic>;
             return Column(
               children: [
-                Image.network(map['image']),
+                Image.network(snapshot.data!.image!),
                 ListTile(
-                  title: Text(map['email']),
-                  subtitle: Text(map['lastName']),
-                  leading: CircleAvatar(child: Text(map['age'].toString()),),
+                  title: Text(snapshot.data!.address!.city!),
+                  subtitle: Text(snapshot.data!.maidenName!),
+                  leading: CircleAvatar(child: Text(snapshot.data!.age.toString()),),
                 )
               ],
             );
